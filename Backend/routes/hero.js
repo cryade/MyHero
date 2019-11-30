@@ -20,8 +20,8 @@ router.get('/:ID/get', hero_controller.hero_id_get);
 //PUT data into the Profile from the hero
 router.put('/:ID/put', hero_controller.hero_id_put);
 
-//POST a new Hero
-router.post('/create', hero_controller.create_hero);
+//POST a new Hero TODO change back to post
+router.get('/create', hero_controller.create_hero);
 
 //PUT a new Rating into the profile
 router.put('/:ID/rate', hero_controller.rate_hero);

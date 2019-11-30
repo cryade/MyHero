@@ -24,7 +24,23 @@ exports.hero_id_put = function (req, res) {
 };
 
 exports.create_hero = function (req, res) {
-    res.send('Post a new hero is not implemented yet');
+    //res.send('Post a new hero is not implemented yet');
+    var MyNewHero = new Hero(
+        {
+            name: req.body.name,
+            description: req.body.description,
+
+        }
+    );
+    MyNewHero.save(function (err) {
+        if (err) {
+            return next(err);
+        }
+        //successful - redirect to new book record.
+        res.redirect(testhero.url);
+    });
+    // res.send(testhero);
+
 
 };
 
