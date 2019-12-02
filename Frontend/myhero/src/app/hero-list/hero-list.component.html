@@ -1,0 +1,27 @@
+<div class="container-fluid">
+  <div class="row align-items-center">
+    <div class="empty d-none d-sm-inline col-md-3"></div>
+    <div class="col-12 col-md-6">
+            <ul class="list-group hero-list">
+                <li class="list-group-item" *ngFor="let hero of heroList">
+                    <div class="justify-content-between row">
+                        <div class="col-2 d-none d-sm-inline avatar"></div>
+                        <div class="col-10 col-sm-8">
+                            <p>
+                                Alias: {{hero.name}}  <br>
+                                Location: {{hero.location}} <br>
+                                Payment: {{hero.price}} <br>
+                                Rating: 5/5
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row justify-content-between">
+                        <button (click)="firstClick()" type="button" class="btn btn-secondary">Profile</button>
+                        <button (click)="secondClick()" type="button" class="btn btn-primary">Hire!</button> 
+                    </div>
+                </li>
+            </ul>
+    </div>
+    <div class="empty d-none d-sm-inline col-md-3"></div>
+  </div>
+</div>
