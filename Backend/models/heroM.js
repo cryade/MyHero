@@ -1,11 +1,11 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var HeroSchema = new Schema(
+const HeroSchema = new Schema(
     {
-        name: {type: String, required: true, max: 20},
-        description: {type: String, required: false, max: 3000},
-        category: [{type: Schema.Types.ObjectID, ref: 'Category'}],
+      name: {type: String, required: true, max: 20},
+      description: {type: String, required: false, max: 3000},
+      category: [{type: Schema.Types.ObjectID, ref: 'Category'}],
     });
 module.exports = mongoose.model('Hero', HeroSchema);
