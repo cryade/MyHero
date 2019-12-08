@@ -1,23 +1,33 @@
 const Category = require('../models/categoryM');
 
 exports.create_category = function(req, res) {
-  const testcategory = new Category(
+  const newCategory = new Category(
       {
-        name: 'He strong',
+        name:req.params.name,
 
       },
   );
-  testcategory.save(function(err) {
+  newCategory.save(function(err) {
     if (err) {
-      return next(err);
+      return res.send(err);
     }
-    // successful - redirect to new book record.
   });
 };
 
 exports.delete_category = function(req, res) {
   res.send('Deleting a category is not implemented yet');
 };
+
 exports.show_categories = function(req, res) {
-  res.send('Showing all  categories is not implemented yet');
-};
+     Category.find(function (err, Category) {
+       if (err) return res.send(err);
+       res.send(Category);
+     })
+   };
+
+   exports.get_categoryID = function(req, res) {
+    Category.findOne({name: req.params.name},function (err, Category) {
+      if (err) return res.send(err);
+      res.send(Category);
+    })
+  };

@@ -1,34 +1,34 @@
 const express = require('express');
-const router = express.router();
+const router = express.Router();
 const heroController = require('../controllers/heroController');
 
 // GET list of all Heros
 router.get('/', heroController.hero_list);
 
 // GET list of Heros with fitting name
-router.get('/search/:Name', heroController.hero_list_name);
+router.get('/searchByName/:name', heroController.hero_list_name);
 
 // GET list of Heros with fitting category
-router.get('/search/:Name', heroController.hero_list_name);
+router.get('/searchByCategory/:name', heroController.hero_list_name);
 
 // GET list of Heros with fitting name
-router.get('/search/:Category', heroController.hero_list_category);
+router.get('/search/:category', heroController.hero_list_category);
 
 // GET a Hero by his ID
-router.get('/:ID/get', heroController.hero_id_get);
+router.get('/getData/:ID', heroController.hero_id_get);
 
-// PUT data into the Profile from the hero
-router.put('/:ID/put', heroController.hero_id_put);
+// PUT data into the Profile from the hero, category is in body
+router.put('/putData/:ID', heroController.hero_id_put);
 
-// POST a new Hero TODO change back to post
-router.get('/create', heroController.create_hero);
+// POST a new Hero TODO change back to post TODO solve category is in body
+router.post('/create', heroController.create_hero);
 
 // PUT a new Rating into the profile
-router.put('/:ID/rate', heroController.rate_hero);
+router.put('/rate/:ID', heroController.rate_hero);
 
 // PUT a Category to the hero
-router.put('/:ID/addCategory', heroController.addCategory_hero);
+router.put('/addCategory/:ID', heroController.addCategory_hero);
 // DELETE a Category to the hero
-router.delete('/:ID/deleteCategory', heroController.deleteCategory_hero);
+router.delete('/deleteCategory/:ID', heroController.deleteCategory_hero);
 
 module.exports = router;
