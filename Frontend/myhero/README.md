@@ -1,11 +1,15 @@
 # Frontend
 
-hours spent on this shit: ~4 + 2
-## Setup
+hours spent on this shit: ~4 + 2 + 3 + 2.5 + 2 (for the fucked up bootstrap cdn's that i was too dumb to notice)
 
 Have yet to figure out how to get angular core to not give me errors.
 Technically done : angular, bootstrap. 
 TODO: create gulp file(where?), angular
+
+## Setup
+
+Basically npm install while in the frontend or myhero folder lol. Might need to get Angular CLI seperately, not sure how that works. 
+
 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.15.
