@@ -5,8 +5,10 @@
             <ul class="list-group hero-list">
                 <li class="list-group-item" *ngFor="let hero of heroList">
                     <div class="justify-content-between row">
-                        <div class="col-2 d-none d-sm-inline avatar"></div>
-                        <div class="col-10 col-sm-8">
+                        <div class="col-3 d-none d-sm-inline avatar">
+                            <img src="../../assets/almight_placeholder.jpg" alt="..." class="img-thumbnail">
+                        </div>
+                        <div class="col-9 col-sm-7">
                             <p>
                                 Alias: {{hero.name}}  <br>
                                 Location: {{hero.location}} <br>

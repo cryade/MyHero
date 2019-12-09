@@ -1,0 +1,22 @@
+.list-group-item .avatar{
+    background-color: grey;
+}
+
+.nav-pills{
+    padding: 2%;
+}
+
+#avatarPlaceholder{
+    width: 120px;
+    height: 120px;
+    margin: 2%;
+    background: grey;
+}
+
+#profileTabContent{
+    padding: 3% 0%;
+}
+
+label{
+    font-size: x-large;
+}

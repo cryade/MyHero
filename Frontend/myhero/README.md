@@ -1,6 +1,6 @@
 # Frontend
 
-hours spent on this shit: ~4 + 2 + 3 + 2.5
+hours spent on this shit: ~4 + 2 + 3 + 2.5 + 2 (for the fucked up bootstrap cdn's that i was too dumb to notice)
 
 Have yet to figure out how to get angular core to not give me errors.
 Technically done : angular, bootstrap. 
