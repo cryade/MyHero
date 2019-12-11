@@ -3,7 +3,7 @@
     <div class="empty d-none d-sm-inline col-md-3"></div>
     <div class="col-12 col-md-6">
             <ul class="list-group hero-list">
-                <li class="list-group-item" *ngFor="let hero of heroList">
+                <li class="list-group-item" *ngFor="let hero of this.heroList">
                     <div class="justify-content-between row">
                         <div class="col-3 d-none d-sm-inline avatar">
                             <img src="../../assets/almight_placeholder.jpg" alt="..." class="img-thumbnail">
@@ -11,8 +11,8 @@
                         <div class="col-9 col-sm-7">
                             <p>
                                 Alias: {{hero.name}}  <br>
-                                Location: {{hero.location}} <br>
-                                Payment: {{hero.price}} <br>
+                                id: {{hero._id}} <br>
+                                Description: {{hero.description}} <br>
                                 Rating: 5/5
                             </p>
                         </div>
