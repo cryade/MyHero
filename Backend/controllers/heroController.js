@@ -1,26 +1,27 @@
-const hero = require('../models/heroM');
-const category = require('../models/categoryM');
-const rating = require('../models/RatingM');
+const Hero = require('../models/heroM');
+const Rating = require('../models/RatingM');
+const User = require('../models/userM');
+
 
 // GET list of all heros
 exports.hero_list = function(req, res) {
  // res.send('Display a list of all heros is not implemented yet');
-  hero.find().populate('category','name').exec(function (err, heroData) {
+  Hero.find().populate({path:'category',select: 'name'}).exec(function (err, heroData) {
     if (err) return res.send(err);
     res.send(heroData);
   })
 };
 
 exports.hero_list_name = function(req, res) {
-  hero.find({ name: { $regex: req.params.name }}).populate('category','name').exec(function (err, heroData) {
+  Hero.find({ name: { $regex: req.params.name }}).populate('category','name').exec(function (err, heroData) {
     if (err) return res.send(err);
     res.send(heroData);
   })
 };
 //Search by name is possible since the Category name is unique
+
 exports.hero_list_category = function(req, res) {
-  var catID = category.findOne({name: req.params.name});
-  hero.find({ category: catID}).populate('category','name').exec(function (err, heroData) {
+  Hero.find({ category: req.params.ID}).populate('category','name').exec(function (err, heroData) {
     if (err) return res.send(err);
     res.send(heroData);
   })
@@ -28,27 +29,36 @@ exports.hero_list_category = function(req, res) {
 
 // GET a Hero by his ID
 exports.hero_id_get = function(req, res) {
-  hero.find({_id: req.params.ID}).populate('category','name').exec(function (err, heroData) {
+  Hero.findOne({_id: req.params.ID}).populate('category','name').populate('rating', '-hero').exec(function (err, heroData) {
     if (err) return res.send(err);
+    console.log(heroData);
     res.send(heroData);
   })
 };
 
-exports.hero_id_put = function(req, res) {
-console.log(req.body);
- hero.findByIdAndUpdate(req.params.ID,req.body,omitUndefined=false, function(err, result){
-  if(err){
-      console.log(err);
-  }
-  console.log("RESULT: " + result);
-  res.send('Done')
-})
-};
+exports.hero_id_put =  function(req, res) {
+  Hero.findByIdAndUpdate(req.params.ID,req.body, function(err, result){
+      if(err){
+          console.log(err);
+      }
+      res.send(result);
+    })}
+  
+  
+
+
+//   req.body.category.forEach( function(value,index){
+//    return category.findOne({name: value}).then(function(searchResult) {
+//        console.log(searchResult);
+//       req.body.category[index] = searchResult._id;
+//     }
+//    )
+//  }).then(function(heroResult) {
+//  })
+
 
 exports.create_hero = function(req, res) {
-
-
-  var myNewHero = new hero(
+  var myNewHero = new Hero(
       {
         "name": req.body.name,
         "description": req.body.description,
@@ -64,13 +74,38 @@ exports.create_hero = function(req, res) {
 };
 
 exports.rate_hero = function(req, res) {
-  res.send('Rate a new hero is not implemented yet');
+var myNewRating = new Rating(
+  {
+    "title": req.body.title,
+    "description": req.body.description,
+    "rating": req.body.rating,
+     "user": req.body.userid,
+     "hero": req.params.ID,
+
+    //TODO id valiadation and name as parameter
+  },
+);
+myNewRating.save(function(err,ratingData) {
+if (err) return res.send(err);
+console.log(myNewRating);
+
+User.updateOne({_id: req.body.userid},{$push: {rating: ratingData._id}}, function(err, userData){
+  if(err){
+    console.log(err);
+}
+console.log(userData);
+console.log("tst");
+
+
+Hero.updateOne(req.params.ID,{$push: { rating: ratingData._id}}, function(err, heroData){
+    if(err){
+        console.log(err);
+    }
+    console.log(heroData);
+  })
+});
+})
+res.send("done");
 };
 
-exports.addCategory_hero = function(req, res) {
-  res.send('Add a category to a hero is not implemented yet');
-};
 
-exports.deleteCategory_hero = function(req, res) {
-  res.send('Delete a category to a hero is not implemented yet');
-};

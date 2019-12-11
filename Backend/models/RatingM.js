@@ -4,8 +4,11 @@ const Schema = mongoose.Schema;
 
 const RatingSchema = new Schema(
     {
-      title: {type: String, required: true, max: 20},
-      description: {type: String, required: false, max: 3000},
-      rating: {type: Number, min: 0, max: 5},
+    title: {type: String, required: true, max: 20},
+     description: {type: String, required: false, max: 3000},
+     rating: {type: Number, min: 0, max: 5},
+     user: {type: Schema.Types.ObjectID, ref: 'User',required:true},
+     hero: {type: Schema.Types.ObjectID, ref: 'Category',required:true}
+
     });
 module.exports = mongoose.model('Rating', RatingSchema);

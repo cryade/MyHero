@@ -9,7 +9,7 @@ router.get('/', heroController.hero_list);
 router.get('/searchByName/:name', heroController.hero_list_name);
 
 // GET list of Heros with fitting category
-router.get('/searchByCategory/:name', heroController.hero_list_name);
+router.get('/searchByCategory/:ID', heroController.hero_list_name);
 
 // GET list of Heros with fitting name
 router.get('/search/:category', heroController.hero_list_category);
@@ -24,11 +24,7 @@ router.put('/putData/:ID', heroController.hero_id_put);
 router.post('/create', heroController.create_hero);
 
 // PUT a new Rating into the profile
-router.put('/rate/:ID', heroController.rate_hero);
+router.post('/rate/:ID', heroController.rate_hero);
 
-// PUT a Category to the hero
-router.put('/addCategory/:ID', heroController.addCategory_hero);
-// DELETE a Category to the hero
-router.delete('/deleteCategory/:ID', heroController.deleteCategory_hero);
 
 module.exports = router;

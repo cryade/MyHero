@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema(
     {
-      username: {type: String, required: true, max: 20},
+      name: {type: String, max: 20},
+      rating: [{type: Schema.Types.ObjectID, ref: 'Rating'}],
     });
 module.exports = mongoose.model('User', UserSchema);

@@ -4,15 +4,18 @@ const userController = require('../controllers/UserController');
 /* GET user listing. */
 router.get('/:ID', userController.show_user);
 
+router.get('/',userController.user_list);
+
+
 // PUT a new User
-router.put('/create', userController.create_user);
+router.post('/create', userController.create_user);
 
 // POST some changes to the userprofile
-router.post('/:ID/edit', userController.edit_user);
+router.post('/edit/:ID', userController.edit_user);
 
-router.delete('/:ID/:RatingID/delete', userController.delete_rating_userprofile);
+
+router.delete('/delete/:ID/:RatingID', userController.delete_rating_userprofile);
 
 router.delete('/:ID', userController.delete_user);
-
 
 module.exports = router;

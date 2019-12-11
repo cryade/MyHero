@@ -14,6 +14,8 @@ const app = express();
 const mongoose = require('mongoose');
 const mongoDB = 'mongodb+srv://MyHeroAdmin:MyHeroDatabase@myherodatabase-zpl5k.mongodb.net/test?retryWrites=true&w=majority';
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
@@ -28,10 +30,10 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/hero', heroRouter);
-app.use('/category', categoryRouter);
+app.use('/api/', indexRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/hero', heroRouter);
+app.use('/api/category', categoryRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
