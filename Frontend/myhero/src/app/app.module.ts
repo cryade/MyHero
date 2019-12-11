@@ -9,6 +9,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { HeroListComponent } from './components/hero-list/hero-list.component';
 import { RateHeroComponent } from './components/rate-hero/rate-hero.component';
 import { HomeComponent } from './components/home/home.component';
+import { HeroProfileComponent } from './components/hero-profile/hero-profile.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { HomeComponent } from './components/home/home.component';
     ProfileComponent,
     HeroListComponent,
     RateHeroComponent,
-    HomeComponent
+    HomeComponent,
+    HeroProfileComponent
   ],
   imports: [
     BrowserModule,

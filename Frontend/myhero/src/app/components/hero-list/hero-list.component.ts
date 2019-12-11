@@ -10,7 +10,7 @@ import { HeroesService } from '~app/services/heroes.service';
 })
 export class HeroListComponent implements OnInit {
 
-    public heroList: Hero[];
+  public heroList: Hero[];
     
   constructor(private heroesService: HeroesService) { }
 
@@ -28,13 +28,23 @@ export class HeroListComponent implements OnInit {
 
     this.heroesService.getHeroes()
       .subscribe((heroes: Hero[]) => this.heroList = heroes);
+
   }
 
-  firstClick(){
-    alert("Profile opens!");
+  getHeroById(id: String){
+    let hero: Hero
+    
+    this.heroesService.getHeroById(id)
+      .subscribe((h => hero=h));
+
+    return hero;
   }
 
-  secondClick(){
-    alert("Book now!");
+  goToProfile(hero: Hero){
+    alert("Profile of "+ hero.name);
+  }
+
+  bookHero(hero: Hero){
+    alert("Book " + hero.name);
   }
 }
