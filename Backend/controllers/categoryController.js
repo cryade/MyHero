@@ -11,11 +11,15 @@ exports.create_category = function(req, res) {
     if (err) {
       return res.send(err);
     }
+    res.send("its done");
   });
 };
 
 exports.delete_category = function(req, res) {
-  res.send('Deleting a category is not implemented yet');
+  Category.findOneAndDelete({_id: req.params.ID},function (err, catData) {
+    if (err) return res.send(err);
+    res.send("Category deleted");
+  })
 };
 
 exports.show_categories = function(req, res) {
@@ -25,7 +29,7 @@ exports.show_categories = function(req, res) {
      })
    };
 
-   exports.get_categoryID = function(req, res) {
+exports.get_categoryID = function(req, res) {
     Category.findOne({name: req.params.name},function (err, Category) {
       if (err) return res.send(err);
       res.send(Category);
