@@ -6,23 +6,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { HeroListComponent } from './components/hero-list/hero-list.component';
 import { RateHeroComponent } from './components/rate-hero/rate-hero.component';
 import { HomeComponent } from './components/home/home.component';
-import { HeroProfileComponent } from './components/hero-profile/hero-profile.component';
+import { HeroesModule } from './components/heroes/heroes.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     ProfileComponent,
-    HeroListComponent,
     RateHeroComponent,
-    HomeComponent,
-    HeroProfileComponent
+    HomeComponent
   ],
   imports: [
     BrowserModule,
+    HeroesModule,
     AppRoutingModule,
     HttpClientModule,
   ],
