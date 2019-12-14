@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Hero } from '../models/hero.model';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,10 @@ export class HeroesService {
 
   getHeroById(id: String): Observable<Hero> {
     return this.http.get<Hero>(`/api/hero/getData/${id}`).pipe(
-      map(data => new Hero().deserialize(data)));
-  }
-}
+      map(data => {
+        console.log(data)
+        return new Hero().deserialize(data)
+      }),
+      catchError(() => throwError('User not found'))
+    );
+  }}
