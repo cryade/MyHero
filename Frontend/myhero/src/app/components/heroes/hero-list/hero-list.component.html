@@ -1,7 +1,7 @@
 <div class="container-fluid">
-  <div class="row align-items-center">
+  <div class="row">
     <div class="empty d-none d-sm-inline col-md-3"></div>
-    <div class="col-12 col-md-6">
+    <div class="col-md-6">
             <ul class="list-group hero-list">
                 <!-- goes through list of heroes and creates a list element for each  -->
                 <li class="list-group-item" *ngFor="let hero of this.heroList">
@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="row justify-content-between">
-                        <button (click)="goToProfile(hero)" type="button" class="btn btn-secondary">Profile</button>
+                        <a [routerLink]="['/heroes/profile/', hero._id]"  type="button" class="btn btn-secondary">Profile</a>
                         <button (click)="bookHero(hero)" type="button" class="btn btn-primary">Hire!</button> 
                     </div>
                 </li>
