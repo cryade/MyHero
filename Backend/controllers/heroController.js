@@ -1,6 +1,7 @@
 const Hero = require('../models/heroM');
 const Rating = require('../models/RatingM');
 const User = require('../models/userM');
+const fs = require('fs');
 
 
 // GET list of all heros
@@ -44,6 +45,18 @@ exports.hero_id_put =  function(req, res) {
       res.send(result);
     })}
   
+exports.hero_upload_pic = function(req,res) {
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send('No files were uploaded.');
+  }
+  Hero.findByIdAndUpdate(req.params.ID,{ imgdata: fs.readFileSync(req.files) }, function(err, result){
+    if(err){
+        console.log(err);
+    }
+    res.status(200).send('File uploaded!');
+
+  })
+}
   
 
 

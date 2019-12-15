@@ -26,5 +26,7 @@ router.post('/create', heroController.create_hero);
 // PUT a new Rating into the profile
 router.post('/rate/:ID', heroController.rate_hero);
 
+router.post('/uploadPic/:ID',heroController.hero_upload_pic);
+
 
 module.exports = router;
