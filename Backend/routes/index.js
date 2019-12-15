@@ -10,7 +10,7 @@ router.get('/auth',function(req,res){
   if (req.session.user != null ){
     res.status(200).send(true);
   }else{
-    res.status(400).send(false);
+    res.status(401).send(false);
   }
 });
 module.exports = router;
