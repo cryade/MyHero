@@ -9,6 +9,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { RateHeroComponent } from './components/rate-hero/rate-hero.component';
 import { HomeComponent } from './components/home/home.component';
 import { HeroesModule } from './components/heroes/heroes.module';
+import { LoginPageComponent } from './components/login-page/login-page.component';
+import { RegisterPageComponent } from './components/register-page/register-page.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { HeroesModule } from './components/heroes/heroes.module';
     NavbarComponent,
     ProfileComponent,
     RateHeroComponent,
-    HomeComponent
+    HomeComponent,
+    LoginPageComponent,
+    RegisterPageComponent
   ],
   imports: [
     BrowserModule,
