@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,18 +16,19 @@ import { RegisterPageComponent } from './components/register-page/register-page.
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent,
+    LoginPageComponent,
     NavbarComponent,
     ProfileComponent,
     RateHeroComponent,
-    HomeComponent,
-    LoginPageComponent,
     RegisterPageComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     HeroesModule,
-    AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
