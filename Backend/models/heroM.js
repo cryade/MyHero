@@ -12,7 +12,7 @@ const HeroSchema = new Schema(
       description: {type: String, required: false, max: 3000},
  //   imgdata: {type: File},
       category: [{type: Schema.Types.ObjectID, ref: 'Category'}],
-      rating: [{type: Schema.Types.ObjectID, ref: 'Rating'}],
+      ratings: [{type: Schema.Types.ObjectID, ref: 'Rating'}],
     });
 
 

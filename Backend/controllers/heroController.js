@@ -3,9 +3,9 @@ const Rating = require('../models/RatingM');
 const User = require('../models/userM');
 
 
-// GET list of all heros
+// GET list of all heroes
 exports.hero_list = function(req, res) {
- // res.send('Display a list of all heros is not implemented yet');
+ // res.send('Display a list of all heroes is not implemented yet');
   Hero.find().populate({path:'category',select: 'name'}).exec(function (err, heroData) {
     if (err) return res.status(400).send(err);
     res.status(200).send(heroData);
@@ -72,9 +72,10 @@ exports.hero_id_put =  function(req, res) {
 exports.create_hero = function(req, res) {
   var myNewHero = new Hero(
       {
-        "heroname": req.body.name,
+        "heroname": req.body.heroname,
         "description": req.body.description,
         "category": req.body.category,
+        "email": req.body.email,
         //TODO id valiadation and name as parameter
       },
   );
@@ -103,7 +104,7 @@ myNewRating.save(function(err,ratingData) {
 if (err) return res.send(err);
 console.log(myNewRating);
 
-User.updateOne({_id: req.body.userid},{$push: {rating: ratingData._id}}, function(err, userData){
+User.updateOne({_id: req.body.userid},{$push: {ratings: ratingData._id}}, function(err, userData){
   if(err){
     console.log(err);
 }
@@ -111,7 +112,7 @@ console.log(userData);
 console.log("tst");
 
 
-Hero.updateOne(req.params.ID,{$push: { rating: ratingData._id}}, function(err, heroData){
+Hero.updateOne(req.params.ID,{$push: { ratings: ratingData._id}}, function(err, heroData){
     if(err){
         console.log(err);
     }

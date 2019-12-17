@@ -2,16 +2,16 @@ const express = require('express');
 const router = express.Router();
 const heroController = require('../controllers/heroController');
 
-// GET list of all Heros
+// GET list of all Heroes
 router.get('/', heroController.hero_list);
 
-// GET list of Heros with fitting name
+// GET list of Heroes with fitting name
 router.get('/searchByName/:name', heroController.hero_list_name);
 
-// GET list of Heros with fitting category
+// GET list of Heroes with fitting category
 router.get('/searchByCategory/:ID', heroController.hero_list_name);
 
-// GET list of Heros with fitting name
+// GET list of Heroes with fitting name
 router.get('/search/:category', heroController.hero_list_category);
 
 // GET a Hero by his ID

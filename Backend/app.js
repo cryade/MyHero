@@ -11,7 +11,7 @@ const cors = require('cors');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const heroRouter = require('./routes/heros');
+const heroRouter = require('./routes/heroes');
 const categoryRouter = require('./routes/category');
 const app = express();
 
@@ -47,7 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(authUtil.isAuthenticated);
 app.use('/api/', indexRouter);
 app.use('/api/users', usersRouter);
-app.use('/api/heros', heroRouter);
+app.use('/api/heroes', heroRouter);
 app.use('/api/category', categoryRouter);
 app.use((req, res, next) => {
   if (req.cookies.user_sid && !req.session.user) {
