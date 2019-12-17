@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/UserController');
 /* GET user listing. */
-router.post('/signIn/', userController.signin_user);
+router.post('/signIn', userController.signin_user);
 
 router.get('/',userController.user_list);
 
@@ -18,5 +18,4 @@ router.delete('/delete/:RatingID', userController.delete_rating_userprofile);
 
 router.delete('/:ID', userController.delete_user);
 
-router.post('/signout', userController.signout)
 module.exports = router;

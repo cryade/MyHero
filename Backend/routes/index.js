@@ -6,11 +6,24 @@ router.get('/', function(req, res, next) {
   res.send('This is the MyHero Backend, you are not supposed to be here');
 });
 
-router.get('/auth',function(req,res){
+router.get('/authUser',function(req,res){
   if (req.session.user != null ){
     res.status(200).send(true);
   }else{
     res.status(401).send(false);
   }
 });
+router.get('/authHero',function(req,res){
+  if (req.session.hero != null ){
+    res.status(200).send(true);
+  }else{
+    res.status(401).send(false);
+  }
+});
 module.exports = router;
+
+router.get('/signout',function(req,res){
+  req.session.destroy();
+  console.log(req.session);
+  res.redirect('/');
+})

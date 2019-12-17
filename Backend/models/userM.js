@@ -5,17 +5,17 @@ let SALT = 10;
 
 const UserSchema = new Schema(
     {
-      username: {type: String, max: 20},
-      password: { type: String, select: true, required: true },
-      firstName: { type: String },
-      lastName: { type: String},
+      username: {type: String, max: 20, required: true},
+      firstName: { type: String, required: false},
+      lastName: { type: String, required: false},
       birthdate: {type: Date, required: false},
-      street: {type: String, },
+      street: {type: String, required: false},
       housenumber: { type: Number,required: false},
-      postalcode: { type: Number, length: 5, required: false},
+      postalcode: { type: Number, minlength: 5, maxlength:5, required: false},
       city: {type: String, required: false},
       email: {type: String, required: true}, //TODO email vaildation
-      rating: [{type: Schema.Types.ObjectID, ref: 'Rating'}],
+      password: { type: String, select: true, required: true },
+      rating: [{type: Schema.Types.ObjectID, ref: 'Rating'}]
     });
 
 UserSchema.pre('save',function(next){
@@ -42,4 +42,9 @@ UserSchema.methods.comparePassword = function(candiatePassword, checkPassword){
     checkPassword(null, isMatch);
   })
 }
+
+// UserSchema.path('email').validate(function (email) {
+//   var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+//   return emailRegex.test(email.text); // Assuming email has a text attribute
+// }, 'The e-mail field cannot be empty.')
 module.exports = mongoose.model('User', UserSchema);

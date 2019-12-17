@@ -1,20 +1,19 @@
 const Hero = require('../models/heroM');
 const Rating = require('../models/RatingM');
 const User = require('../models/userM');
-const fs = require('fs');
 
 
 // GET list of all heros
 exports.hero_list = function(req, res) {
  // res.send('Display a list of all heros is not implemented yet');
   Hero.find().populate({path:'category',select: 'name'}).exec(function (err, heroData) {
-    if (err) return res.send(err);
-    res.send(heroData);
+    if (err) return res.status(400).send(err);
+    res.status(200).send(heroData);
   })
 };
 
 exports.hero_list_name = function(req, res) {
-  Hero.find({ name: { $regex: req.params.name }}).populate('category','name').exec(function (err, heroData) {
+  Hero.find({ heroname: { $regex: req.params.name }}).populate('category','name').exec(function (err, heroData) {
     if (err) return res.send(err);
     res.send(heroData);
   })
@@ -45,18 +44,18 @@ exports.hero_id_put =  function(req, res) {
       res.send(result);
     })}
   
-exports.hero_upload_pic = function(req,res) {
-  if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send('No files were uploaded.');
-  }
-  Hero.findByIdAndUpdate(req.params.ID,{ imgdata: fs.readFileSync(req.files) }, function(err, result){
-    if(err){
-        console.log(err);
-    }
-    res.status(200).send('File uploaded!');
+// exports.hero_upload_pic = function(req,res) {
+//   if (!req.files || Object.keys(req.files).length === 0) {
+//     return res.status(400).send('No files were uploaded.');
+//   }
+//   Hero.findByIdAndUpdate(req.params.ID,{ imgdata: req.files }, function(err, result){
+//     if(err){
+//         console.log(err);
+//     }
+//     res.status(200).send('File uploaded!');
 
-  })
-}
+//   })
+// }
   
 
 
@@ -73,7 +72,7 @@ exports.hero_upload_pic = function(req,res) {
 exports.create_hero = function(req, res) {
   var myNewHero = new Hero(
       {
-        "name": req.body.name,
+        "heroname": req.body.name,
         "description": req.body.description,
         "category": req.body.category,
         //TODO id valiadation and name as parameter
@@ -81,6 +80,7 @@ exports.create_hero = function(req, res) {
   );
   myNewHero.save(function(err) {
     if (err) return res.send(err);
+
     res.send(myNewHero);
   });
   // res.send(MyNewHero);
@@ -92,12 +92,13 @@ var myNewRating = new Rating(
     "title": req.body.title,
     "description": req.body.description,
     "rating": req.body.rating,
-     "user": req.body.userid,
-     "hero": req.params.ID,
+    "user": req.body.userid,
+    "hero": req.params.ID,
 
     //TODO id valiadation and name as parameter
   },
 );
+
 myNewRating.save(function(err,ratingData) {
 if (err) return res.send(err);
 console.log(myNewRating);
@@ -120,5 +121,6 @@ Hero.updateOne(req.params.ID,{$push: { rating: ratingData._id}}, function(err, h
 })
 res.send("done");
 };
+
 
 
