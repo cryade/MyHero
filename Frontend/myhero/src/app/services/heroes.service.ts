@@ -13,13 +13,13 @@ export class HeroesService {
   constructor(private http: HttpClient) { }
 
   getHeroes(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(`/api/hero/`).pipe(
+    return this.http.get<Hero[]>(`/api/heroes/`).pipe(
       map(data => data.map(data => new Hero().deserialize(data)))
     );
   }
 
   getHeroById(id: String): Observable<Hero> {
-    return this.http.get<Hero>(`/api/hero/getData/${id}`).pipe(
+    return this.http.get<Hero>(`/api/heroes/getData/${id}`).pipe(
       map(data => {
         console.log(data)
         return new Hero().deserialize(data)

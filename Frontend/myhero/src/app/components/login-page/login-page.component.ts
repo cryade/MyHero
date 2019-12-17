@@ -27,7 +27,9 @@ export class LoginPageComponent implements OnInit {
 
   onSubmit(userdata){
     console.log(userdata.userName);
-    this.usersService.logIn(userdata).subscribe();
+    this.usersService.logIn(userdata).subscribe(
+      (result) => console.log("result:", result)
+    );
   }
 
 }
