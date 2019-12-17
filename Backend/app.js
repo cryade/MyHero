@@ -6,6 +6,7 @@ const logger = require('morgan');
 const session =require('express-session');
 const fileUpload = require('express-fileupload');
 const MongoStore = require('connect-mongo')(session);
+const cors = require('cors');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -49,7 +50,10 @@ app.use('/api/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/hero', heroRouter);
 app.use('/api/category', categoryRouter);
-
+     
+app.use(cors({origin: [
+  "http://localhost:4200"
+], credentials: true}));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

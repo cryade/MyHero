@@ -5,7 +5,7 @@ let SALT = 10;
 
 const UserSchema = new Schema(
     {
-      username: {type: String, max: 20},
+      name: {type: String, max: 20},
       password: { type: String, select: true, required: true },
       firstName: { type: String },
       lastName: { type: String},

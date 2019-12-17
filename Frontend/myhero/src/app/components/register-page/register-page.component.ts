@@ -21,9 +21,10 @@ export class RegisterPageComponent implements OnInit {
       lastName: '',
       email: '',
       street: '',
-      streetNr: '',
+      houseNr: 0,
       city: '',
-      postalCode: ''
+      birthdate: '',
+      postalCode: 0
     });
    }
 
