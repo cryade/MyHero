@@ -7,12 +7,13 @@ const session =require('express-session');
 const fileUpload = require('express-fileupload');
 const MongoStore = require('connect-mongo')(session);
 const authUtil = require('./helper/auth');
+const cors = require('cors');
+
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const heroRouter = require('./routes/heros');
 const categoryRouter = require('./routes/category');
 const app = express();
-const cors = require('cors');
 
 
 const mongoose = require('mongoose');

@@ -12,6 +12,7 @@ import { HomeComponent } from './components/home/home.component';
 import { HeroesModule } from './components/heroes/heroes.module';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
+import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
 
 @NgModule({
   declarations: [
@@ -21,14 +22,15 @@ import { RegisterPageComponent } from './components/register-page/register-page.
     NavbarComponent,
     ProfileComponent,
     RateHeroComponent,
-    RegisterPageComponent
+    RegisterPageComponent,
+    NotFoundPageComponent
   ],
   imports: [
-    AppRoutingModule,
-    BrowserModule,
     HeroesModule,
+    BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
+    AppRoutingModule, //LEAVE THIS AT THE BOTTOM!!!
   ],
   providers: [],
   bootstrap: [AppComponent]

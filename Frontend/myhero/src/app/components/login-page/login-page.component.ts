@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
+import { UsersService } from '~app/services/users.service';
+
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
@@ -12,6 +14,7 @@ export class LoginPageComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private usersService: UsersService
   ) {
     this.loginForm = this.formBuilder.group({
       userName: '',
@@ -24,6 +27,7 @@ export class LoginPageComponent implements OnInit {
 
   onSubmit(userdata){
     console.log(userdata.userName);
+    this.usersService.logIn(userdata).subscribe();
   }
 
 }

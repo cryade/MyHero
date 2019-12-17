@@ -2,7 +2,8 @@ const User = require('../models/userM');
 const Rating = require('../models/RatingM');
 
 const sessionizeUser = user => {
-  return { userId: user._id, username: user.username };
+   return { userId: user._id, username: user.username };
+
 }
 exports.create_user = function(req, res) {
   User.findOne({username: req.body.username}).exec(function (err, userData) {
@@ -56,7 +57,7 @@ exports.delete_user = function(req, res) {
 exports.signin_user = function(req, res) {
   User.findOne({username: req.body.username}).exec(function (err, userData) {
     if (err) return res.send(err);
-    if(!userData) {res.send("Login faild, user not found") }else{
+    if(!userData) {res.status(400).send("Login faild, user not found") }else{
     userData.comparePassword(req.body.password,function(err, isMatch){
       if(err) throw(err);
       if(!isMatch) return res.status(400).json({
