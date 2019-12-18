@@ -14,12 +14,12 @@
           </small>
         </p>
       </div>
-      <label><h5>Username</h5></label>
       <form
         [formGroup]="registerForm"
         (ngSubmit)="onSubmit(registerForm.value)"
       >
         <div class="form-group">
+          <label><h5>Username</h5></label>
           <input
             type="text"
             placeholder="Username"

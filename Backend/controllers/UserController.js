@@ -38,7 +38,7 @@ myNewUser.save(function(err, userData) {
 })};
 
 exports.edit_user = function(req, res) {
-  User.findByIdAndUpdate(req.session.userId,req.body, function(err, result){
+  User.findByIdAndUpdate(req.session.user.userId, req.body, omitUndefined=true, function(err, result){
     if(err){
         console.log(err);
     }
@@ -64,12 +64,25 @@ exports.signin_user = function(req, res) {
         message: "Wrong Password"
       });
       req.session.user = sessionizeUser(userData);  
-      console.log(req.session) 
       res.status(200).send(req.session)
     })
    }
   })
 };
+
+exports.current_user = function(req, res){
+  if (!req.session.user)  {
+    return res.status(400).json({
+    message: "Not logged in"
+  });}
+  else {
+    User.findOne({username: req.session.user.username}).populate('rating', '-user').exec(function (err, userData) {
+      if (err) return res.send(err);
+      console.log("You're logged in:",userData);
+      res.send(userData);
+    });
+  }
+}
 
 exports.delete_rating_userprofile = function(req, res) {
   Rating.findOneAndDelete({_id: req.params.ID},function (err) {

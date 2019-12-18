@@ -6,12 +6,13 @@ router.post('/signIn', userController.signin_user);
 
 router.get('/',userController.user_list);
 
+router.get('/currentuser', userController.current_user);
 
 // PUT a new User
 router.post('/create', userController.create_user);
 
 // POST some changes to the userprofile
-router.put('/edit/', userController.edit_user);
+router.put('/edit', userController.edit_user);
 
 
 router.delete('/delete/:RatingID', userController.delete_rating_userprofile);

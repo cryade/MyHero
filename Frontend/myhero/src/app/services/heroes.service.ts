@@ -21,9 +21,8 @@ export class HeroesService {
   getHeroById(id: String): Observable<Hero> {
     return this.http.get<Hero>(`/api/heroes/getData/${id}`).pipe(
       map(data => {
-        console.log(data)
         return new Hero().deserialize(data)
       }),
-      catchError(() => throwError('User not found'))
+      catchError(() => throwError('Hero not found'))
     );
   }}
