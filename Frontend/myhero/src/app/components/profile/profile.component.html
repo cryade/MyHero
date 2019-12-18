@@ -16,19 +16,23 @@
 
     <div id="profileTabContent" class="tab-content">
       <div id="infobox" class="tab-pane fade active show">
+        <p>
+          Leaving a field empty will remove the corresponding info from your profile.<br>
+          Fields marked with * may not be left empty. 
+        </p>
         <form
           [formGroup]="editForm"
           (ngSubmit)="onSubmit(editForm.value)"
         >
           <div class="d-flex flex-column form-group">
-            <label><h5>Username</h5></label>
+            <label><h5>Username *</h5></label>
             <input
               type="text"
               placeholder="Username"
               id="username"
               class="form-control mb-4"
               formControlName="userName"
-              value="{{ user.username }}"
+              required
             />
             <label><h5>First Name</h5></label>
             <input
@@ -37,7 +41,6 @@
               id="firstname"
               class="form-control mb-4"
               formControlName="firstName"
-              value="{{ user.firstName }}"
             />
             <label><h5>Last Name</h5></label>
             <input
@@ -46,16 +49,23 @@
               id="lastname"
               class="form-control mb-4"
               formControlName="lastName"
-              value="{{ user.lastName }}"
             />
-            <label><h5>Email</h5></label>
+            <label><h5>Birthday</h5></label>
+            <input 
+            type="date"
+            placeholder="DD-MM-YYYY"
+            id="birthday"
+            class="form-control mb-4"
+            formControlName="birthdate"
+            />
+            <label><h5>Email *</h5></label>
             <input
               type="text"
               class="form-control mb-4"
               id="email"
               placeholder="email@example.com"
               formControlName="email"
-              value="{{ user.email }}"
+              required
             />
             <label><h5>Streetname</h5></label>
             <input
@@ -64,7 +74,6 @@
               id="streetname"
               placeholder="Streetname"
               formControlName="street"
-              value="{{ user.street }}"
             />
             <label><h5>HouseNr.</h5></label>
             <input
@@ -73,7 +82,6 @@
               id="houseNr"
               formControlName="houseNr"
               placeholder="House number"
-              value="{{ user.housenumber }}"
             />
             <label><h5>Postal Code</h5></label>
             <input
@@ -82,7 +90,6 @@
               id="postalCode"
               formControlName="postalCode"
               placeholder="Postal code"
-              value="{{ user.postalcode }}"
             />
             <label><h5>City</h5></label>
             <input
@@ -91,10 +98,9 @@
               id="city"
               formControlName="city"
               placeholder="City"
-              value="{{ user.city }}"
             />
             <div class="mt-3">
-              <button class="btn btn-primary" type="submit">Update</button>
+              <button class="btn btn-primary" type="submit" [disabled]="!editForm.valid">Update</button>
             </div>
           </div>
         </form>

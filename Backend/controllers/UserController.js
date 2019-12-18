@@ -37,6 +37,7 @@ myNewUser.save(function(err, userData) {
 } 
 })};
 
+
 exports.edit_user = async function(req, res) {
   console.log(req.session.user.userId);
   console.log(req.body);

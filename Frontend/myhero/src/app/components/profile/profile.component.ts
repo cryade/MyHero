@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { UsersService } from "~app/services/users.service";
 import { User } from "~app/models/user.model";
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: "app-profile",
@@ -18,11 +18,10 @@ export class ProfileComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.editForm = this.formBuilder.group({
-      userName: "",
-      password: "",
+      userName: ["lol", Validators.required],
       firstName: "",
       lastName: "",
-      email: "",
+      email: ["", Validators.required],
       street: "",
       houseNr: 0,
       city: "",
@@ -47,13 +46,33 @@ export class ProfileComponent implements OnInit {
       { name: "Fenrir", location: "my heart", price: "forget it" }
     ];
 
-    this.usersService.getCurrentUser().subscribe(data => (this.user = data));
+    // Get Info of logged in user, then enter it into the edit form
+    this.usersService.getCurrentUser().subscribe(data => {
+      this.user = data;
+      this.reloadForm();
+    });
   }
 
   onSubmit(formData){
+    console.log(formData)
     this.usersService.editUser(formData).subscribe((result) =>{
      console.log("result: ", result);
      this.user=result;
+     this.reloadForm();
+    });
+  }
+
+  reloadForm(){
+    this.editForm.patchValue({
+      userName: this.user.username,
+      firstName: this.user.firstName,
+      lastName: this.user.lastName,
+      email: this.user.email,
+      street: this.user.street,
+      houseNr: this.user.housenumber,
+      city: this.user.city,
+      birthdate: this.user.birthdate,
+      postalCode: this.user.postalcode
     });
   }
 }
