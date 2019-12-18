@@ -38,7 +38,7 @@ myNewUser.save(function(err, userData) {
 })};
 
 exports.edit_user = function(req, res) {
-  User.findByIdAndUpdate(req.session.user.userId, req.body, omitUndefined=true, function(err, result){
+  User.findByIdAndUpdate(req.session.user.userId, req.body, [omitUndefined=true], function(err, result){
     if(err){
         console.log(err);
     }
