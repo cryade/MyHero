@@ -7,15 +7,16 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
+import { AuthGuard } from './auth.guard';
 
 
 
 const routes: Routes = [
-  { path : "", component: HomeComponent},
-  { path : "rate", component: RateHeroComponent },
-  { path : "profile", component: ProfileComponent },
-  { path : "login", component: LoginPageComponent},
-  { path : "register", component: RegisterPageComponent },
+  { path : "", component: HomeComponent, canActivate: [AuthGuard]},
+  { path : "rate", component: RateHeroComponent, canActivate: [AuthGuard] },
+  { path : "profile", component: ProfileComponent, canActivate: [AuthGuard] },
+  { path : "login", component: LoginPageComponent, canActivate: [AuthGuard]},
+  { path : "register", component: RegisterPageComponent, canActivate: [AuthGuard] },
   { path : "**", component: NotFoundPageComponent } //TODO: Make 404 Page
 ];
 
