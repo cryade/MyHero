@@ -5,12 +5,9 @@ const Schema = mongoose.Schema;
 const HeroSchema = new Schema(
     {
       heroname: {type: String, required: true, max: 20},
-      //picture
-      // avg rating
       email: { type: String, required: true},
       location: {type: String, required: false, max: 30},
       description: {type: String, required: false, max: 3000},
- //   imgdata: {type: File},
       category: [{type: Schema.Types.ObjectID, ref: 'Category'}],
       ratings: [{type: Schema.Types.ObjectID, ref: 'Rating'}],
     });

@@ -31,6 +31,7 @@ app.use(session({
   secret: 'secret!session',
   resave: false,
   saveUninitialized: true,
+  //persistent login
   store: new MongoStore({ mongooseConnection: db })
 }));
 
@@ -51,6 +52,7 @@ app.use('/api/heroes', heroRouter);
 app.use('/api/category', categoryRouter);
 app.use((req, res, next) => {
   if (req.cookies.user_sid && !req.session.user) {
+    console.log("destroy");
       res.clearCookie('user_sid');        
   }
   next();

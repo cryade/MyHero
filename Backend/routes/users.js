@@ -11,9 +11,9 @@ router.get('/',userController.user_list);
 router.post('/create', userController.create_user);
 
 // POST some changes to the userprofile
-router.put('/edit/', userController.edit_user);
+router.put('/edit', userController.edit_user);
 
-
+router.post('/bookHero/:HeroID', userController.book_hero);
 router.delete('/delete/:RatingID', userController.delete_rating_userprofile);
 
 router.delete('/:ID', userController.delete_user);

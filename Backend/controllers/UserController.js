@@ -38,7 +38,7 @@ myNewUser.save(function(err, userData) {
 })};
 
 exports.edit_user = function(req, res) {
-  User.findByIdAndUpdate(req.session.userId,req.body, function(err, result){
+  User.findByIdAndUpdate(req.session.user.userId,req.body,omitUndefined = false, function(err, result){
     if(err){
         console.log(err);
     }
@@ -47,7 +47,7 @@ exports.edit_user = function(req, res) {
 };
 
 exports.delete_user = function(req, res) {
-  User.findOneAndDelete({_id: req.session.userId},function (err, userData) {
+  User.findOneAndDelete({_id: req.session.user.userId},function (err, userData) {
     if (err) return res.send(err);
     res.send("User"+userData+" deleted");
   })
@@ -85,3 +85,14 @@ exports.user_list = function(req, res) {
      res.send(userData);
    })
  };
+
+ exports.book_hero = function(req,res) {
+
+   User.findByIdAndUpdate(req.session.user.userId,{$push: {bookedHeroes: req.params.HeroID}}, function(err){
+    if(err){
+      console.log(err);
+      res.status(400).send(err);
+    }
+    res.status(200).send("Hero booked");
+  });
+ }
