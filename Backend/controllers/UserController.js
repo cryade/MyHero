@@ -37,13 +37,22 @@ myNewUser.save(function(err, userData) {
 } 
 })};
 
-exports.edit_user = function(req, res) {
-  User.findByIdAndUpdate(req.session.user.userId, req.body, omitUndefined=true, function(err, result){
+exports.edit_user = async function(req, res) {
+  console.log(req.session.user.userId);
+  console.log(req.body);
+  await User.findOneAndUpdate({_id:req.session.user.userId}, req.body,{new:true},function(err, result){
     if(err){
-        console.log(err);
+        res.status(400).send(err);
+      
     }
-    res.send(result);
-  })
+    });
+     User.findById(req.session.user.userId, function(err,result){
+      if(err){
+        console.log(err);
+     }
+     console.log(result);
+     res.send(result);
+    }).select("-password");
 };
 
 exports.delete_user = function(req, res) {
