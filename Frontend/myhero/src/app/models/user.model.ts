@@ -18,7 +18,7 @@ export class User implements Deserializable {
   deserialize(input: any): this {
     Object.assign(this, input);
 
-    this.rating = input.category.map(rat =>
+    this.rating = input.rating.map(rat =>
       new Rating().deserialize(rat)
     );
     return this;
