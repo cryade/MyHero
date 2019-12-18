@@ -41,19 +41,14 @@ myNewUser.save(function(err, userData) {
 exports.edit_user = async function(req, res) {
   console.log(req.session.user.userId);
   console.log(req.body);
-  await User.findOneAndUpdate({_id:req.session.user.userId}, req.body,{new:true},function(err, result){
+  await User.findOneAndUpdate({_id:req.session.user.userId}, req.body,[{new: true}, omitundefined = false], (err, doc) => {
     if(err){
         res.status(400).send(err);
-      
+        
     }
+    console.log(doc);
+    res.status(200).send(doc);
     });
-     User.findById(req.session.user.userId, function(err,result){
-      if(err){
-        console.log(err);
-     }
-     console.log(result);
-     res.send(result);
-    }).select("-password");
 };
 
 exports.delete_user = function(req, res) {
@@ -81,18 +76,13 @@ exports.signin_user = function(req, res) {
 };
 
 exports.current_user = function(req, res){
-  if (!req.session.user)  {
-    return res.status(401).json({
-    message: "Not logged in"
-  });}
-  else {
-    User.findOne({username: req.session.user.username}).populate('ratings', '-user').populate('bookedHeroes').exec(function (err, userData) {
+    User.findById(req.session.user.userId).populate('ratings', '-user').populate('bookedHeroes').select('-password').exec(function (err, userData) {
       if (err) return res.send(err);
       console.log("You're logged in:",userData);
       res.send(userData);
     });
   }
-}
+
 
 exports.delete_rating_userprofile = function(req, res) {
   Rating.findOneAndDelete({_id: req.params.ID},function (err) {

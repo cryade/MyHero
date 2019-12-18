@@ -12,29 +12,4 @@ const HeroSchema = new Schema(
       ratings: [{type: Schema.Types.ObjectID, ref: 'Rating'}],
     });
 
-
-    HeroSchema.pre('save',function(next){
-      var hero = this;
-      if(hero.isModified('password')){
-        bcrypt.genSalt(SALT,function(err,salt){
-          if(err) return next(err);
-          bcrypt.hash(hero.password,salt,function(err,hash){
-            if(err) return next(err);
-            hero.password = hash;
-            next();
-          })
-        })
-      } else {
-        next();
-      }
-    })
-    
-HeroSchema.methods.comparePassword = function(candiatePassword, checkPassword){
-      console.log(this.password);
-      console.log(candiatePassword);
-      bcrypt.compare(candiatePassword,this.password,function(err,isMatch){
-        if(err) return checkPassword(err)
-        checkPassword(null, isMatch);
-      })
-    }
 module.exports = mongoose.model('Hero', HeroSchema);
