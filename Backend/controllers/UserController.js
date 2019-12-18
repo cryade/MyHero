@@ -57,7 +57,7 @@ exports.delete_user = function(req, res) {
 exports.signin_user = function(req, res) {
   User.findOne({username: req.body.username}).exec(function (err, userData) {
     if (err) return res.send(err);
-    if(!userData) {res.status(400).send("Login faild, user not found") }else{
+    if(!userData) {res.status(400).send("Login failed, user not found") }else{
     userData.comparePassword(req.body.password,function(err, isMatch){
       if(err) throw(err);
       if(!isMatch) return res.status(400).json({
@@ -76,7 +76,7 @@ exports.current_user = function(req, res){
     message: "Not logged in"
   });}
   else {
-    User.findOne({username: req.session.user.username}).populate('rating', '-user').exec(function (err, userData) {
+    User.findOne({username: req.session.user.username}).populate('ratings', '-user').populate('bookedHeroes').exec(function (err, userData) {
       if (err) return res.send(err);
       console.log("You're logged in:",userData);
       res.send(userData);
