@@ -7,7 +7,7 @@ const User = require('../models/userM');
 exports.hero_list = function(req, res) {
  // res.send('Display a list of all heroes is not implemented yet');
   Hero.find().populate({path:'category',select: 'name'}).exec(function (err, heroData) {
-    if (err) return res.status(400).send(err);
+    if (err) return res.status(500).send(err);
     res.status(200).send(heroData);
   })
 };
