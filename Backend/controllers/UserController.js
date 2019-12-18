@@ -41,19 +41,14 @@ myNewUser.save(function(err, userData) {
 exports.edit_user = async function(req, res) {
   console.log(req.session.user.userId);
   console.log(req.body);
-  await User.findOneAndUpdate({_id:req.session.user.userId}, req.body,{new:true},function(err, result){
+  await User.findOneAndUpdate({_id:req.session.user.userId}, req.body,[{new: true}, omitundefined = false], (err, doc) => {
     if(err){
         res.status(400).send(err);
-      
+        
     }
+    console.log(doc);
+    res.status(200).send(doc);
     });
-     User.findById(req.session.user.userId, function(err,result){
-      if(err){
-        console.log(err);
-     }
-     console.log(result);
-     res.send(result);
-    }).select("-password");
 };
 
 exports.delete_user = function(req, res) {
