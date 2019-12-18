@@ -37,17 +37,27 @@ myNewUser.save(function(err, userData) {
 } 
 })};
 
-exports.edit_user = function(req, res) {
-  User.findByIdAndUpdate(req.session.user.userId, req.body, [omitUndefined=true], function(err, result){
+
+exports.edit_user = async function(req, res) {
+  console.log(req.session.user.userId);
+  console.log(req.body);
+  await User.findOneAndUpdate({_id:req.session.user.userId}, req.body,{new:true},function(err, result){
     if(err){
-        console.log(err);
+        res.status(400).send(err);
+      
     }
-    res.send(result);
-  })
+    });
+     User.findById(req.session.user.userId, function(err,result){
+      if(err){
+        console.log(err);
+     }
+     console.log(result);
+     res.send(result);
+    }).select("-password");
 };
 
 exports.delete_user = function(req, res) {
-  User.findOneAndDelete({_id: req.session.userId},function (err, userData) {
+  User.findOneAndDelete({_id: req.session.user.userId},function (err, userData) {
     if (err) return res.send(err);
     res.send("User"+userData+" deleted");
   })
@@ -57,7 +67,7 @@ exports.delete_user = function(req, res) {
 exports.signin_user = function(req, res) {
   User.findOne({username: req.body.username}).exec(function (err, userData) {
     if (err) return res.send(err);
-    if(!userData) {res.status(400).send("Login faild, user not found") }else{
+    if(!userData) {res.status(400).send("Login failed, user not found") }else{
     userData.comparePassword(req.body.password,function(err, isMatch){
       if(err) throw(err);
       if(!isMatch) return res.status(400).json({
@@ -72,11 +82,11 @@ exports.signin_user = function(req, res) {
 
 exports.current_user = function(req, res){
   if (!req.session.user)  {
-    return res.status(400).json({
+    return res.status(401).json({
     message: "Not logged in"
   });}
   else {
-    User.findOne({username: req.session.user.username}).populate('rating', '-user').exec(function (err, userData) {
+    User.findOne({username: req.session.user.username}).populate('ratings', '-user').populate('bookedHeroes').exec(function (err, userData) {
       if (err) return res.send(err);
       console.log("You're logged in:",userData);
       res.send(userData);
@@ -98,3 +108,14 @@ exports.user_list = function(req, res) {
      res.send(userData);
    })
  };
+
+ exports.book_hero = function(req,res) {
+
+   User.findByIdAndUpdate(req.session.user.userId,{$push: {bookedHeroes: req.params.HeroID}}, function(err){
+    if(err){
+      console.log(err);
+      res.status(400).send(err);
+    }
+    res.status(200).send("Hero booked");
+  });
+ }

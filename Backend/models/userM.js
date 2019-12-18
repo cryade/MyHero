@@ -15,7 +15,8 @@ const UserSchema = new Schema(
       city: {type: String, required: false},
       email: {type: String, required: true}, //TODO email vaildation
       password: { type: String, select: true, required: true },
-      rating: [{type: Schema.Types.ObjectID, ref: 'Rating'}]
+      ratings: [{type: Schema.Types.ObjectID, ref: 'Rating'}],
+      bookedHeroes: [{type: Schema.Types.ObjectID, ref: 'Hero'}],
     });
 
 UserSchema.pre('save',function(next){

@@ -104,7 +104,7 @@ myNewRating.save(function(err,ratingData) {
 if (err) return res.send(err);
 console.log(myNewRating);
 
-User.updateOne({_id: req.body.userid},{$push: {ratings: ratingData._id}}, function(err, userData){
+User.updateOne({_id: req.session.user.userid},{$push: {ratings: ratingData._id}}, function(err, userData){
   if(err){
     console.log(err);
 }
