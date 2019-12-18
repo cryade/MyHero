@@ -80,18 +80,13 @@ exports.signin_user = function(req, res) {
 };
 
 exports.current_user = function(req, res){
-  if (!req.session.user)  {
-    return res.status(401).json({
-    message: "Not logged in"
-  });}
-  else {
-    User.findOne({username: req.session.user.username}).populate('ratings', '-user').populate('bookedHeroes').exec(function (err, userData) {
+    User.findById(req.session.user.userId).populate('ratings', '-user').populate('bookedHeroes').select('-password').exec(function (err, userData) {
       if (err) return res.send(err);
       console.log("You're logged in:",userData);
       res.send(userData);
     });
   }
-}
+
 
 exports.delete_rating_userprofile = function(req, res) {
   Rating.findOneAndDelete({_id: req.params.ID},function (err) {
