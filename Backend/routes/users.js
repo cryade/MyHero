@@ -7,6 +7,7 @@ router.post('/signIn', userController.signin_user);
 router.get('/',userController.user_list);
 
 router.get('/currentuser', userController.current_user);
+router.get('/isSignedIn', userController.check_login_status);
 
 // PUT a new User
 router.post('/create', userController.create_user);

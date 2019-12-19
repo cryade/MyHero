@@ -1,16 +1,32 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from '../models/user.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError, BehaviorSubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
   })
 export class UsersService{
+    public loggedIn = false;
     result: any;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
+
+  // checkLoggedInStatus(): Observable<Object>{
+  //   return this.http.get(`/api/users/isSignedIn`);
+  // }
+
+  // getLogin() {
+  //   this.http.get(`/api/users/isSignedIn`, {
+  //     withCredentials: true // <=========== important!
+  //   }).subscribe((resp: any) => {
+  //     this.loggedIn.next(resp.loggedIn);
+  //   }, (errorResp) => {
+  //     console.log('Oops, something went wrong getting the logged in status')
+  //   })
+  // }
 
   getCurrentUser(): Observable<User>{
     return this.http.get(`/api/users/currentuser`).pipe(
@@ -22,6 +38,9 @@ export class UsersService{
   }
 
   logIn(input): Observable<Object>{
+
+    this.loggedIn = true;
+    this.router.navigate(['']);
   
     return this.http.post<Object>(`/api/users/signIn`, {
         username: input.userName,
@@ -32,7 +51,8 @@ export class UsersService{
   }
 
   logOut(){
-    return this.http.get(`api/signout`);
+    this.loggedIn = false;
+    return this.http.post(`api/signout`, {});
   }
 
   newUser(input): Observable<User>{

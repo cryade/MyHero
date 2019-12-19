@@ -83,6 +83,9 @@ exports.current_user = function(req, res){
     });
   }
 
+exports.check_login_status = function(req, res){
+  req.session.user ? res.status(200).send({loggedIn: true}) : res.status(200).send({loggedIn: false});
+}
 
 exports.delete_rating_userprofile = function(req, res) {
   Rating.findOneAndDelete({_id: req.params.ID},function (err) {
