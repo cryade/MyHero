@@ -36,7 +36,7 @@ exports.create_user = function (req, res) {
         res.status(201).send(myNewUser);
       });
     } else {
-      res.status(400).json({
+     return res.status(400).json({
         message: "Username already taken"
       });
     }

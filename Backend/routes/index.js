@@ -3,7 +3,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.send(true);
+  return res.json({loggendIn: true});
 });
 
 // router.get('/authUser',function(req,res){
