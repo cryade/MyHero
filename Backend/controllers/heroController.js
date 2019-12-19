@@ -93,7 +93,7 @@ var myNewRating = new Rating(
     "title": req.body.title,
     "description": req.body.description,
     "rating": req.body.rating,
-    "user": req.body.userid,
+    "user": req.session.user.userId,
     "hero": req.params.ID,
 
     //TODO id valiadation and name as parameter
@@ -102,25 +102,22 @@ var myNewRating = new Rating(
 
 myNewRating.save(function(err,ratingData) {
 if (err) return res.send(err);
-console.log(myNewRating);
 
-User.updateOne({_id: req.session.user.userid},{$push: {ratings: ratingData._id}}, function(err, userData){
+User.updateOne({_id: req.session.user.userId},{$push: {ratings: ratingData._id}}, function(err, userData){
   if(err){
     console.log(err);
 }
-console.log(userData);
-console.log("tst");
 
 
-Hero.updateOne(req.params.ID,{$push: { ratings: ratingData._id}}, function(err, heroData){
+Hero.updateOne({_id: req.params.ID},{$push: { ratings: ratingData._id}}, function(err, heroData){
     if(err){
-        console.log(err);
+        console.send(err);
     }
-    console.log(heroData);
   })
 });
+res.status(201).json("done");
 })
-res.send("done");
+
 };
 
 

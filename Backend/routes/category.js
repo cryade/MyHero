@@ -5,8 +5,10 @@ const category_controller = require('../controllers/categoryController');
 // GET list of all Categories
 router.get('/', category_controller.show_categories);
 
-router.post('/create/:name', category_controller.create_category);
+//POST a new cateogry
+router.post('/create', category_controller.create_category);
 
+//GET the ID form a name
 router.get('/getID/:name', category_controller.get_categoryID);
 
 // DELETE a category

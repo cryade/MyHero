@@ -24,6 +24,7 @@ module.exports = router;
 
 router.post('/signout',function(req,res){
   req.session.destroy();
-  res.clearCookie('user_sid').send("loggedOut");
+  res.clearCookie('user_sid').json({
+    message: "loggedOut"});
   
 })
