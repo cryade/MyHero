@@ -19,6 +19,7 @@ export class AppComponent implements OnInit{
   constructor(private usersService: UsersService){}
 
   ngOnInit(){
+    this.usersService.checkLoggedInStatus();
   }
 
 //   isLoggedIn() {

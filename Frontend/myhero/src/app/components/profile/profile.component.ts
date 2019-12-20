@@ -17,8 +17,9 @@ export class ProfileComponent implements OnInit {
     private usersService: UsersService,
     private formBuilder: FormBuilder
   ) {
+    // initialise the edit form & define required values
     this.editForm = this.formBuilder.group({
-      userName: ["lol", Validators.required],
+      userName: ["", Validators.required], //can't actually be changed in this version of MyHero
       firstName: "",
       lastName: "",
       email: ["", Validators.required],
@@ -53,15 +54,18 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  /* Save data from Edit-Form to database via usersService */
   onSubmit(formData){
     console.log(formData)
     this.usersService.editUser(formData).subscribe((result) =>{
      console.log("result: ", result);
-     this.user=result;
+     this.user = result;
+     // reload form so that the data that was just changed is now in the form
      this.reloadForm();
     });
   }
 
+  /* (Re-)Load the user-values into the form. If a property of user is undefiend, the field is left empty */
   reloadForm(){
     this.editForm.patchValue({
       userName: this.user.username,

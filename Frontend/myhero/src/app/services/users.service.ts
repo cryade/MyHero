@@ -14,15 +14,18 @@ export class UsersService{
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  // checkLoggedInStatus(): Observable<Object>{
-  //   return this.http.get(`/api/users/isSignedIn`);
-  // }
+  checkLoggedInStatus(){
+    this.http.get(`/api/users/isSignedIn`).subscribe((result: any) => {
+      this.loggedIn = result.loggedIn;
+      console.log("smh",this.loggedIn)
+    });
+  }
 
   // getLogin() {
   //   this.http.get(`/api/users/isSignedIn`, {
   //     withCredentials: true // <=========== important!
   //   }).subscribe((resp: any) => {
-  //     this.loggedIn.next(resp.loggedIn);
+  //     this.loggedIn.next(resp.loggedIn); perhaps it doesn't know resp.loggedIn?
   //   }, (errorResp) => {
   //     console.log('Oops, something went wrong getting the logged in status')
   //   })
@@ -33,13 +36,14 @@ export class UsersService{
       map(data => {
         return new User().deserialize(data)
       }),
-      catchError(() => throwError('User not found'))
+      catchError((error) => this.handleError(error))
     );;
   }
 
   logIn(input): Observable<Object>{
 
     this.loggedIn = true;
+    console.log("now is the time")
     this.router.navigate(['']);
   
     return this.http.post<Object>(`/api/users/signIn`, {
@@ -57,6 +61,9 @@ export class UsersService{
 
   newUser(input): Observable<User>{
       console.log(input);
+      this.loggedIn = true;
+      this.router.navigate(['']);
+    
       return this.http.post<User>(`/api/users/create`, {
         username: input.userName,
         password: input.password,
