@@ -14,6 +14,7 @@ export class UsersService{
 
   constructor(private http: HttpClient, private router: Router) { }
 
+  /* makes a request to check whether the user is logged in or not. */
   checkLoggedInStatus(){
     this.http.get(`/api/users/isSignedIn`).subscribe((result: any) => {
       this.loggedIn = result.loggedIn;
@@ -21,7 +22,7 @@ export class UsersService{
     });
   }
 
-  // getLogin() {
+  // getLogin() {  --> another approach to checking whether uer is logged in or not, but did also not work reliably
   //   this.http.get(`/api/users/isSignedIn`, {
   //     withCredentials: true // <=========== important!
   //   }).subscribe((resp: any) => {
@@ -40,6 +41,7 @@ export class UsersService{
     );;
   }
 
+  /* authenticates the user */
   logIn(input): Observable<Object>{
 
     this.loggedIn = true;
@@ -58,6 +60,7 @@ export class UsersService{
     return this.http.post(`api/signout`, {});
   }
 
+  /* used for registration. creates a new user and posts it to the database */ 
   newUser(input): Observable<User>{
       console.log(input);
       this.loggedIn = true;
@@ -77,6 +80,8 @@ export class UsersService{
     })
   }
 
+
+  /* Edits different data of the currently logged in user */
   editUser(input): Observable<User>{
     return this.http.put<User>(`/api/users/edit`,{
       username: input.userName,
