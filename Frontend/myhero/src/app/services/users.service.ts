@@ -43,7 +43,6 @@ export class UsersService{
   logIn(input): Observable<Object>{
 
     this.loggedIn = true;
-    console.log("now is the time")
     this.router.navigate(['']);
   
     return this.http.post<Object>(`/api/users/signIn`, {

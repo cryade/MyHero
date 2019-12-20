@@ -5,9 +5,9 @@ import { Deserializable } from "./deserializable.model";
 export class Hero implements Deserializable {
 
     public category: Category[];
-    public rating: Rating[];
+    public ratings: Rating[];
     public _id: string;
-    public name: string;
+    public heroname: string;
     public description: string;
     public _v: number;
 
@@ -18,6 +18,7 @@ export class Hero implements Deserializable {
     this.category = input.category.map(cat =>
       new Category().deserialize(cat)
     );
+    console.log("cat:", this.category)
     return this;
   }
 }

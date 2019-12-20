@@ -95,7 +95,7 @@ exports.signin_user = function (req, res) {
 //Returns the user who is currently logged in. The populate functions fill the references 
 //from the Schema with the actual objects and the select defines that the password isn't send
 exports.current_user = function (req, res) {
-  User.findById(req.session.user.userId).populate('ratings', '-user').populate('bookedHeroes').select('-password').exec(function (err, userData) {
+  User.findById(req.session.user.userId).populate({path:'ratings', populate: {path: 'hero'}}).populate({path: 'bookedHeroes',  populate: { path: 'category' }}).select('-password').exec(function (err, userData) {
     if (err) return res.statu(500).send(err);
     console.log("You're logged in:", userData);
     res.status(200).send(userData);
@@ -115,7 +115,6 @@ exports.user_list = function (req, res) {
     res.send(userData);
   })
 };
-
 
 //Makes a reference in the user schema to a hero. This reference is the symbol that the hero was booked by the user 
 exports.book_hero = function (req, res) {

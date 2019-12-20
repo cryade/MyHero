@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { UsersService } from "~app/services/users.service";
 import { User } from "~app/models/user.model";
 import { FormBuilder, Validators } from "@angular/forms";
+import { HeroesService } from '~app/services/heroes.service';
 
 @Component({
   selector: "app-profile",
@@ -10,11 +11,13 @@ import { FormBuilder, Validators } from "@angular/forms";
 })
 export class ProfileComponent implements OnInit {
   private editForm;
+  private rateForm;
   private heroList: Object;
   private user: User = new User;
 
   constructor(
     private usersService: UsersService,
+    private heroesService: HeroesService,
     private formBuilder: FormBuilder
   ) {
     // initialise the edit form & define required values
@@ -29,23 +32,16 @@ export class ProfileComponent implements OnInit {
       birthdate: "",
       postalCode: 0
     });
+
+    this.rateForm = this.formBuilder.group({
+      title: ["", Validators.required],
+      comment: ["", Validators.required],
+      starRating: ["", Validators.required]
+    })
   }
 
   ngOnInit() {
-    this.heroList = [
-      { name: "Midoriya Izuku", location: "My heart", price: "100000 yen" },
-      {
-        name: "Bakugou Katsuki",
-        location: "my dungeon",
-        price: "like a billion $"
-      },
-      {
-        name: "Todoroki Shouto",
-        location: "my other dungeon",
-        price: "free if you ask nicely"
-      },
-      { name: "Fenrir", location: "my heart", price: "forget it" }
-    ];
+    
 
     // Get Info of logged in user, then enter it into the edit form
     this.usersService.getCurrentUser().subscribe(data => {
@@ -78,5 +74,16 @@ export class ProfileComponent implements OnInit {
       birthdate: this.user.birthdate,
       postalCode: this.user.postalcode
     });
+  }
+
+  rateHero(hero, formData){
+    formData.starRating = parseInt(formData.starRating);
+    console.log(hero._id)
+    this.heroesService.rateHero(hero._id, formData).subscribe(result => console.log(result));
+  }
+
+  loadUserData(){
+    this.usersService.getCurrentUser().subscribe(data => {
+      this.user = data;})
   }
 }

@@ -11,10 +11,16 @@
                         </div>
                         <div class="col-9 col-sm-7">
                             <p id="hero-info">
-                                Alias: {{hero.name}}  <br>
-                                Description: {{hero.description}} <br>
-                                Rating: 5/5
+                                Alias: {{hero.heroname}}  <br>
+                                Bio: {{hero.description}} <br>
+                                Email: {{hero.email}} <br>
+                                Categories: 
                             </p>
+                            <ul>
+                                <li *ngFor="let category of hero.category">
+                                  {{ category.name }}
+                                </li>
+                              </ul>
                         </div>
                     </div>
                     <div class="row justify-content-between">
@@ -22,7 +28,7 @@
                         <button (click)="bookHero(hero)" type="button" class="btn btn-primary">Hire!</button> 
                     </div>
                 </li>
-                <!-- end of sinlge list element -->
+                <!-- end of single list element -->
             </ul>
     </div>
     <div class="empty d-none d-sm-inline col-md-3"></div>

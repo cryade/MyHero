@@ -19,3 +19,4 @@ router.post('/bookHero/:HeroID', userController.book_hero);
 
 router.delete('/deleteUser', userController.delete_user);
 
+module.exports = router;

@@ -7,7 +7,7 @@ exports.rate_hero = function(req, res) {
   //checks if the heroID is valid
 Hero.findById(req.params.heroID).exec(function(err,heroData){
   if(err) return res.status(500).send(err);
-  if(heroData == null) return res.status(200).json({
+  if(heroData == null) return res.status(400).json({
     message: "no hero with that ID"
   })
 })

@@ -13,10 +13,16 @@
         </div>
         <div class="col-9 col-sm-7">
           <p id="hero-info">
-            Alias: {{ hero$.name }} <br />
-            Bio: {{ hero$.description }} <br />
-            Rating: 5/5
-          </p>
+            Alias: {{hero$.heroname}}  <br>
+            Description: {{hero$.description}} <br>
+            email: {{hero$.email}} <br>
+            Categories: 
+        </p>
+        <ul>
+            <li *ngFor="let category of hero$.category">
+              {{ category.name }}
+            </li>
+          </ul>
         </div>
       </div>
       <ul class="list-group hero-list">
