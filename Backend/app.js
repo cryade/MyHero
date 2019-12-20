@@ -13,6 +13,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const heroRouter = require('./routes/heroes');
 const categoryRouter = require('./routes/category');
+const ratingRouter = require('./routes/ratings')
 const app = express();
 
 
@@ -50,6 +51,7 @@ app.use('/api/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/heroes', heroRouter);
 app.use('/api/category', categoryRouter);
+app.use('/api/ratings',ratingRouter);
 app.use((req, res, next) => {
   if (req.cookies.user_sid && !req.session.user) {
     console.log("destroy");

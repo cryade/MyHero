@@ -7,6 +7,6 @@ exports.isAuthenticated = function(req, res, next) {
         }
     }else{
     console.log(req.url);
-    res.status(401).send(false);
+    return res.status(401).json({ loggendIn: false});
     }
 }
