@@ -15,8 +15,6 @@ router.post('/create', userController.create_user);
 router.put('/edit', userController.edit_user);
 
 router.post('/bookHero/:HeroID', userController.book_hero);
-router.delete('/deleteRating/:RatingID', userController.delete_rating_userprofile);
 
-router.delete('/deleteUser/:ID', userController.delete_user);
+router.delete('/deleteUser', userController.delete_user);
 
-module.exports = router;

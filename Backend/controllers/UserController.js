@@ -1,5 +1,5 @@
 const User = require('../models/userM');
-const Rating = require('../models/RatingM');
+const Hero = require('../models/heroM');
 
 //the function sessionize User saves the ObjectID and the username in one variable so it can be used for the session
 const sessionizeUser = user => {
@@ -44,6 +44,7 @@ exports.create_user = function (req, res) {
 };
 
 //The function edit_user edits usersdata. The new data is given in req.body and only the fields which are stated there get a update.
+//This function has to be asynchronos because the programm needs to wait till the changes are completed before the response is sent
 exports.edit_user = async function (req, res) {
   await User.findOneAndUpdate({ _id: req.session.user.userId }, req.body, [{ new: true }, omitundefined = false], (err, doc) => {
     if (err) {
@@ -80,7 +81,7 @@ exports.signin_user = function (req, res) {
       //Compare the password
       userData.comparePassword(req.body.password, function (err, isMatch) {
         if (err) throw (err);
-        if (!isMatch) return res.json({
+        if (!isMatch) return res.status(400).json({
           message: "Wrong Password"
         });
         //Set the session so the user stays logged in
@@ -101,37 +102,13 @@ exports.current_user = function (req, res) {
   });
 }
 
-//Deletes a rating. This action is triggered at the profile page from the user
-exports.delete_rating_userprofile = function (req, res) {
-  //Checks if the rating which should be deleted exists
 
-  Rating.findOne({ _id: req.params.RatingID }).exec(function (err, rating) {
-    if (err) return res.status(500).send(err);
-    if (rating == null) {
-      res.status(400).send({
-        message: "No such rating"
-      })
-      return;
-    }
-    //The references are deleted automatically
-
-    Rating.findOneAndDelete({ _id: req.params.RatingID }, function (err) {
-      if (err) {
-        return res.status(500).send(err)
-      } else {
-        res.json({
-          message: "Rating deleted"
-        });
-      }
-    })
-  });
-};
 
 // only for dev
 // shows all users stored in the database
 exports.user_list = function (req, res) {
   User.find().exec(function (err, userData) {
-    if (err) return res.send(err);
+    if (err) return res.status(500).send(err);
     res.send(userData);
   })
 };
@@ -139,11 +116,17 @@ exports.user_list = function (req, res) {
 
 //Makes a reference in the user schema to a hero. This reference is the symbol that the hero was booked by the user 
 exports.book_hero = function (req, res) {
-
+  Hero.findById(req.params.HeroID).exec(function(err, heroData){
+    if(heroData == null){
+      return res.status(400).json({
+        message: "There is no hero with that ID"
+      })
+    }
+  })
   User.findByIdAndUpdate(req.session.user.userId, { $push: { bookedHeroes: req.params.HeroID } }, function (err) {
     if (err) {
       console.log(err);
-      res.status(400).send(err);
+      res.status(500).send(err);
     }
     res.status(200).json({
       message: "Hero" + req.params.HeroID + " booked"
