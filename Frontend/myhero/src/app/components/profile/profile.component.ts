@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit {
       userName: ["", Validators.required], //can't actually be changed in this version of MyHero
       firstName: "",
       lastName: "",
-      email: ["", Validators.required],
+      email: ["", Validators.required, Validators.email],
       street: "",
       houseNr: 0,
       city: "",

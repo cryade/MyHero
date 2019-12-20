@@ -22,7 +22,7 @@ export class RegisterPageComponent implements OnInit {
       password: ['', Validators.required],
       firstName: '',
       lastName: '',
-      email: ['', Validators.required],
+      email: ['', Validators.required, Validators.email],
       street: '',
       houseNr: 0,
       city: '',
