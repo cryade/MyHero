@@ -1,10 +1,9 @@
 const express = require('express');
+
 const router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  return res.json({loggendIn: true});
-});
+router.get('/', (req, res) => res.json({ loggendIn: true }));
 
 // router.get('/authUser',function(req,res){
 //   if (req.session.user != null ){
@@ -22,9 +21,7 @@ router.get('/', function(req, res, next) {
 // });
 module.exports = router;
 
-router.post('/signout',function(req,res){
+router.post('/signout', (req, res) => {
   req.session.destroy();
-  res.clearCookie('user_sid').json({
-    message: "loggedOut"});
-  
-})
+  res.clearCookie('user_sid').json({ message: 'loggedOut' });
+});
