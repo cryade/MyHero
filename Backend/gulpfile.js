@@ -1,44 +1,53 @@
 const gulp = require('gulp');
+const { series } = require('gulp');
 const eslint = require('gulp-eslint');
-const gulpIf = require('gulp-if'); // new dependency added
+const mocha = require('gulp-mocha');
+var clean = require('gulp-clean');
+const concat = require('gulp-concat');
+var browserify = require('gulp-browserify');
+var nodemon = require('gulp-nodemon');
+const exec = require('gulp-exec')
 
 
-
-// new function added to check if ESLint has run the fix
-function isFixed(file) {
-  return file.eslint !== null && file.eslint.fixed;
+//Remove build directory.
+gulp.task('clean', function(){
+  return del('dist/**', {force:true});
+});
+function lint(cb) {
+  gulp.src(['./**/*.js', '!node_modules/**/*', '!gulpfile.js'])
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
+  cb();
 }
 
-// new lint and fix task
-gulp.task('eslint-fix-modules', () => {
-  return gulp.src('modules/*.js',{base: './'})
-      .pipe(eslint({fix: true,}))
-      .pipe(eslint.formatEach())
-  // if running fix - replace existing file with fixed one
-      .pipe(gulpIf(isFixed, gulp.dest('./modules/')))
-      .pipe(eslint.failAfterError());
-});
-gulp.task('eslint-fix-routes', () => {
-    return gulp.src('routes/*.js')
-        .pipe(eslint({fix: true,}))
-        .pipe(eslint.formatEach())
-    // if running fix - replace existing file with fixed one
-        .pipe(gulpIf(isFixed, gulp.dest('./routes/')))
-        .pipe(eslint.failAfterError());
-  });
-  gulp.task('eslint-fix-bin', () => {
-    return gulp.src('bin/*.js')
-        .pipe(eslint({fix: true,}))
-        .pipe(eslint.formatEach())
-    // if running fix - replace existing file with fixed one
-        .pipe(gulpIf(isFixed, gulp.dest('./bin/')))
-        .pipe(eslint.failAfterError());
-  });
-  gulp.task('eslint-fix-app', () => {
-    return gulp.src('app.js')
-        .pipe(eslint({fix: true,}))
-        .pipe(eslint.formatEach())
-    // if running fix - replace existing file with fixed one
-        .pipe(gulpIf(isFixed, gulp.dest('./')))
-        .pipe(eslint.failAfterError());
-  });
+function test(cb) {
+  gulp.src('tests/test.js',['lint'], { read: false })
+  // `gulp-mocha` needs filepaths so you can't have any plugins before it
+    .pipe(mocha({ reporter: 'nyan' }));
+  cb();
+}
+function build(){
+  gulp.src('controllers/**/*.js')
+  .pipe(gulp.dest('dist/controllers'));
+  gulp.src('helper/**/*.js')
+  .pipe(gulp.dest('dist/helper'));
+  gulp.src('bin/**/*.js')
+  .pipe(gulp.dest('dist/bin'));
+  gulp.src('app.js')
+  .pipe(gulp.dest('dist/'));
+  gulp.src('models/**/*.js')
+  .pipe(gulp.dest('dist/models'));
+  gulp.src('routes/**/*.js')
+  .pipe(gulp.dest('dist/routes'));
+
+}
+function start(){
+  return gulp.src("./bin")
+  .pipe(exec('nodemon www.js'))
+  .pipe(exec.reporter());
+}
+
+
+
+exports.default = series(lint,test);

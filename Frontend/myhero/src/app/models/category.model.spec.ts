@@ -1,7 +1,7 @@
-import { Category.Model } from './category.model';
+import { Category } from './category.model';
 
 describe('Category.Model', () => {
   it('should create an instance', () => {
-    expect(new Category.Model()).toBeTruthy();
+    expect(new Category()).toBeTruthy();
   });
 });

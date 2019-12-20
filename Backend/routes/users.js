@@ -1,21 +1,22 @@
 const express = require('express');
+
 const router = express.Router();
 const userController = require('../controllers/UserController');
 /* GET user listing. */
-router.get('/:ID', userController.show_user);
+router.post('/signIn', userController.signinUser);
 
-router.get('/',userController.user_list);
+router.get('/', userController.userList);
 
+router.get('/currentuser', userController.getCurrentUser);
 
 // PUT a new User
-router.post('/create', userController.create_user);
+router.post('/create', userController.createUser);
 
 // POST some changes to the userprofile
-router.post('/edit/:ID', userController.edit_user);
+router.put('/edit', userController.editUser);
 
+router.post('/bookHero/:HeroID', userController.bookHero);
 
-router.delete('/delete/:ID/:RatingID', userController.delete_rating_userprofile);
-
-router.delete('/:ID', userController.delete_user);
+router.delete('/deleteUser', userController.deleteUser);
 
 module.exports = router;

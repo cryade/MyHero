@@ -1,0 +1,36 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="empty d-none d-sm-inline col-md-3"></div>
+    <div class="col-md-6">
+            <ul class="list-group hero-list">
+                <!-- goes through list of heroes and creates a list element for each  -->
+                <li class="list-group-item" *ngFor="let hero of this.heroList">
+                    <div class="justify-content-between row">
+                        <div class="col-3 d-none d-sm-inline avatar">
+                            <img src="../../assets/almight_placeholder.jpg" alt="..." class="img-thumbnail">
+                        </div>
+                        <div class="col-9 col-sm-7">
+                            <p id="hero-info">
+                                Alias: {{hero.heroname}}  <br>
+                                Bio: {{hero.description}} <br>
+                                Email: {{hero.email}} <br>
+                                Categories: 
+                            </p>
+                            <ul>
+                                <li *ngFor="let category of hero.category">
+                                  {{ category.name }}
+                                </li>
+                              </ul>
+                        </div>
+                    </div>
+                    <div class="row justify-content-between">
+                        <a [routerLink]="['/heroes/profile/', hero._id]"  type="button" class="btn btn-secondary">Profile</a>
+                        <button (click)="bookHero(hero)" type="button" class="btn btn-primary">Hire!</button> 
+                    </div>
+                </li>
+                <!-- end of single list element -->
+            </ul>
+    </div>
+    <div class="empty d-none d-sm-inline col-md-3"></div>
+  </div>
+</div>
