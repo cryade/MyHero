@@ -14,37 +14,17 @@ export class HeroListComponent implements OnInit {
     
   constructor(private heroesService: HeroesService) { }
 
-  ngOnInit() {
-      // this.heroList = [
-      //   {name: "Midoriya Izuku", location: "Musutafu", price: "100000 yen"},
-      //   {name: "Bakugou Katsuki", location: "my dungeon", price: "like a billion $"},
-      //   {name: "Todoroki Shouto", location: "my other dungeon", price: "free if you ask nicely"},
-      //   {name: "Fenrir", location: "my heart", price: "forget it"}
-      // ]
+  ngOnInit(){
       this.getHeroList();
   }
 
   getHeroList(){
-
     this.heroesService.getHeroes()
       .subscribe((heroes: Hero[]) => this.heroList = heroes);
-
-  }
-
-  getHeroById(id: String){
-    let hero: Hero
-    
-    this.heroesService.getHeroById(id)
-      .subscribe((h => hero=h));
-
-    return hero;
-  }
-
-  goToProfile(hero: Hero){
-    alert("Profile of "+ hero.name);
   }
 
   bookHero(hero: Hero){
-    alert("Book " + hero.name);
+    this.heroesService.bookHero(hero._id);
+    alert("Succesfully booked hero! Find him and other heroes you booked on yor profile!")
   }
 }

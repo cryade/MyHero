@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import { UsersService } from '~app/services/users.service';
 
 @Component({
   selector: 'app-register-page',
@@ -13,13 +14,15 @@ export class RegisterPageComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private usersService: UsersService,
   ) {
+    //initialise form & define which values are required
     this.registerForm = this.formBuilder.group({
-      userName: '',
-      password: '',
+      userName: ['', Validators.required],
+      password: ['', Validators.required],
       firstName: '',
       lastName: '',
-      email: '',
+      email: ['', Validators.required],
       street: '',
       houseNr: 0,
       city: '',
@@ -31,7 +34,16 @@ export class RegisterPageComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit(userdata){
-    console.log(userdata.userName);
-  }
+  /* Save data entered into registerForm into database via UsersService */
+  onSubmit(formData){
+    console.log(formData.userName);
+    this.usersService.newUser(formData).subscribe(()=>
+      this.usersService.loggedIn = true
+    ),
+    error => {
+      if (error.status === 400){
+        alert("That username is already taken, please pick a different one");
+      } else (console.log("An error occured", error.message))
+    }
+  };
 }

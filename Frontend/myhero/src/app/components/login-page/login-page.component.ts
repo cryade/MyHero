@@ -29,7 +29,11 @@ export class LoginPageComponent implements OnInit {
     console.log(userdata.userName);
     this.usersService.logIn(userdata).subscribe(
       (result) => console.log("result:", result)
-    );
+    ),
+    error => {
+      if (error.status === 400) alert("Wrong username oder password");
+      else console.log("An error occured:", error.message);
+    };
   }
 
 }

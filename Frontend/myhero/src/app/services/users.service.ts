@@ -1,27 +1,49 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from '../models/user.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError, BehaviorSubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
   })
 export class UsersService{
+    public loggedIn = false;
     result: any;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
+
+  checkLoggedInStatus(){
+    this.http.get(`/api/users/isSignedIn`).subscribe((result: any) => {
+      this.loggedIn = result.loggedIn;
+      console.log("smh",this.loggedIn)
+    });
+  }
+
+  // getLogin() {
+  //   this.http.get(`/api/users/isSignedIn`, {
+  //     withCredentials: true // <=========== important!
+  //   }).subscribe((resp: any) => {
+  //     this.loggedIn.next(resp.loggedIn); perhaps it doesn't know resp.loggedIn?
+  //   }, (errorResp) => {
+  //     console.log('Oops, something went wrong getting the logged in status')
+  //   })
+  // }
 
   getCurrentUser(): Observable<User>{
     return this.http.get(`/api/users/currentuser`).pipe(
       map(data => {
         return new User().deserialize(data)
       }),
-      catchError(() => throwError('User not found'))
+      catchError((error) => this.handleError(error))
     );;
   }
 
   logIn(input): Observable<Object>{
+
+    this.loggedIn = true;
+    this.router.navigate(['']);
   
     return this.http.post<Object>(`/api/users/signIn`, {
         username: input.userName,
@@ -32,11 +54,15 @@ export class UsersService{
   }
 
   logOut(){
-    return this.http.get(`api/signout`);
+    this.loggedIn = false;
+    return this.http.post(`api/signout`, {});
   }
 
   newUser(input): Observable<User>{
       console.log(input);
+      this.loggedIn = true;
+      this.router.navigate(['']);
+    
       return this.http.post<User>(`/api/users/create`, {
         username: input.userName,
         password: input.password,

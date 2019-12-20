@@ -1,5 +1,6 @@
 import { Deserializable } from "./deserializable.model";
 import { Rating } from "./rating.model";
+import { Hero } from "./hero.model";
 
 export class User implements Deserializable {
 
@@ -13,14 +14,18 @@ export class User implements Deserializable {
     public postalcode: Number;
     public city: String;
     public email: String;
-    public rating: Rating[];
+    public ratings: Rating[];
+    public bookedHeroes: Hero[];
 
   deserialize(input: any): this {
     Object.assign(this, input);
 
-    this.rating = input.rating.map(rat =>
+    this.ratings = input.ratings.map((rat: Rating) =>
       new Rating().deserialize(rat)
     );
+
+    this.bookedHeroes = input.bookedHeroes.map((hero: Hero) =>
+      new Hero().deserialize(hero));
     return this;
   }
 }
